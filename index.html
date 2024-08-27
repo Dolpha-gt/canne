@@ -6,32 +6,56 @@
     <title>Boîtier Assistance Avancée</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-lg {
+            width: 150px;
+            height: 60px;
+        }
+
+        .btn-spacing {
+            margin: 10px; /* 1 cm approximately */
+        }
+
+        .center-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-buttons > div {
+            margin: 0 10px; /* Ensure consistent spacing */
+        }
+
+        .row-spacing {
+            margin-bottom: 0; /* Remove extra margin from rows */
+        }
+    </style>
 </head>
 <body>
     <div class="container my-5">
         <h1 class="text-center">Boîtier Assistance Avancée</h1>
 
-        <div class="row justify-content-center my-4">
+        <div class="row justify-content-center my-4 row-spacing">
             <div class="col-4 text-center">
-                <button id="btn4" class="btn btn-danger btn-lg mb-2">Intrpt</button>
+                <button id="btn4" class="btn btn-danger btn-lg">Intrpt</button>
             </div>
         </div>
 
-        <div class="row justify-content-center my-4">
-            <div class="col-4 text-center">
-                <button id="btn1" class="btn btn-primary btn-lg mb-2">Oùs-j?</button>
+        <div class="row justify-content-center my-4 center-buttons">
+            <div class="text-center">
+                <button id="btn1" class="btn btn-primary btn-lg btn-spacing">Où suis-je ?</button>
             </div>
-            <div class="col-4 text-center">
-                <button id="btn5" class="btn btn-warning btn-lg mb-2">Menu</button>
+            <div class="text-center">
+                <button id="btn5" class="btn btn-warning btn-lg">Menu</button>
             </div>
-            <div class="col-4 text-center">
-                <button id="btn2" class="btn btn-secondary btn-lg mb-2">NaVocl</button>
+            <div class="text-center">
+                <button id="btn2" class="btn btn-secondary btn-lg btn-spacing">NaVocl</button>
             </div>
         </div>
 
-        <div class="row justify-content-center my-4">
+        <div class="row justify-content-center my-4 row-spacing">
             <div class="col-4 text-center">
-                <button id="btn3" class="btn btn-info btn-lg mb-2">Drct&H</button>
+                <button id="btn3" class="btn btn-info btn-lg">Drct&H</button>
             </div>
         </div>
 
