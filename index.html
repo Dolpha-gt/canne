@@ -1,12 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>canne intelligente</title>
+    <title>Assistance Avancée pour les Aveugles</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    code javascripte
+    <div class="container">
+        <header class="my-4">
+            <h1 class="text-center">Assistance Avancée pour les Aveugles</h1>
+        </header>
+
+        <section id="status" class="my-4">
+            <h2>Statut du Système</h2>
+            <p id="speaker-status" class="alert alert-info">Haut-parleur : En attente...</p>
+            <p id="wifi-status" class="alert alert-warning">Connexion Wi-Fi : Non connectée</p>
+        </section>
+
+        <section id="gps" class="my-4">
+            <h2>Connexion GPS et Application Smartphone</h2>
+            <div id="gps-status" class="alert alert-secondary">GPS : En attente de connexion...</div>
+            <div id="app-status" class="alert alert-secondary">Application : En attente de connexion...</div>
+        </section>
+
+        <section id="firmware" class="my-4">
+            <h2>Mises à jour du Programme Interne</h2>
+            <div id="firmware-status" class="alert alert-secondary">Statut des mises à jour : En attente...</div>
+        </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Simulate speaker initialization
+        document.getElementById('speaker-status').textContent = 'Haut-parleur : Démarrage réussi !';
+
+        // Simulate Wi-Fi connection
+        let wifiConnected = false;
+        setTimeout(() => {
+            wifiConnected = true;
+            document.getElementById('wifi-status').textContent = 'Connexion Wi-Fi : Connectée';
+            document.getElementById('wifi-status').classList.replace('alert-warning', 'alert-success');
+            if (wifiConnected) {
+                alert("Connexion Wi-Fi réussie !");
+            }
+        }, 2000);
+
+        // Simulate GPS and app connection
+        setTimeout(() => {
+            document.getElementById('gps-status').textContent = 'GPS : Connecté';
+            document.getElementById('gps-status').classList.replace('alert-secondary', 'alert-success');
+            document.getElementById('app-status').textContent = 'Application : Connectée';
+            document.getElementById('app-status').classList.replace('alert-secondary', 'alert-success');
+        }, 3000);
+
+        // Simulate firmware update status
+        setTimeout(() => {
+            document.getElementById('firmware-status').textContent = 'Statut des mises à jour : À jour';
+            document.getElementById('firmware-status').classList.replace('alert-secondary', 'alert-success');
+        }, 4000);
+    </script>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
