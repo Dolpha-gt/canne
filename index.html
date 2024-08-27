@@ -3,63 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistance Avancée pour les Aveugles</title>
+    <title>Boîtier Assistance Avancée</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header class="my-4">
-            <h1 class="text-center">Assistance Avancée pour les Aveugles</h1>
-        </header>
+    <div class="container my-5">
+        <h1 class="text-center">Boîtier Assistance Avancée</h1>
 
-        <section id="status" class="my-4">
-            <h2>Statut du Système</h2>
-            <p id="speaker-status" class="alert alert-info">Haut-parleur : En attente...</p>
-            <p id="wifi-status" class="alert alert-warning">Connexion Wi-Fi : Non connectée</p>
-        </section>
+        <div class="row my-4">
+            <div class="col-12 text-center">
+                <button id="btn1" class="btn btn-primary btn-lg mb-2">Où suis-je ?</button><br>
+                <button id="btn2" class="btn btn-secondary btn-lg mb-2">Navigateur Vocal</button><br>
+                <button id="btn3" class="btn btn-info btn-lg mb-2">Direction & Heure</button><br>
+                <button id="btn4" class="btn btn-danger btn-lg mb-2">Interrupteur</button><br>
+                <button id="btn5" class="btn btn-warning btn-lg mb-2">Menu</button>
+            </div>
+        </div>
 
-        <section id="gps" class="my-4">
-            <h2>Connexion GPS et Application Smartphone</h2>
-            <div id="gps-status" class="alert alert-secondary">GPS : En attente de connexion...</div>
-            <div id="app-status" class="alert alert-secondary">Application : En attente de connexion...</div>
-        </section>
-
-        <section id="firmware" class="my-4">
-            <h2>Mises à jour du Programme Interne</h2>
-            <div id="firmware-status" class="alert alert-secondary">Statut des mises à jour : En attente...</div>
-        </section>
+        <div id="response" class="alert alert-light" role="alert" style="display: none;">
+            Réponse du serveur : <span id="server-response"></span>
+        </div>
     </div>
 
     <!-- JavaScript -->
     <script>
-        // Simulate speaker initialization
-        document.getElementById('speaker-status').textContent = 'Haut-parleur : Démarrage réussi !';
+        // Simulate button actions and server responses
+        function sendRequest(buttonId, message) {
+            document.getElementById('response').style.display = 'block';
+            document.getElementById('server-response').textContent = Le bouton ${buttonId} a été activé : ${message};
+        }
 
-        // Simulate Wi-Fi connection
-        let wifiConnected = false;
-        setTimeout(() => {
-            wifiConnected = true;
-            document.getElementById('wifi-status').textContent = 'Connexion Wi-Fi : Connectée';
-            document.getElementById('wifi-status').classList.replace('alert-warning', 'alert-success');
-            if (wifiConnected) {
-                alert("Connexion Wi-Fi réussie !");
-            }
-        }, 2000);
+        document.getElementById('btn1').addEventListener('click', function() {
+            sendRequest(1, "Demande de localisation en cours...");
+            // Simulate server interaction for "Où suis-je ?"
+        });
 
-        // Simulate GPS and app connection
-        setTimeout(() => {
-            document.getElementById('gps-status').textContent = 'GPS : Connecté';
-            document.getElementById('gps-status').classList.replace('alert-secondary', 'alert-success');
-            document.getElementById('app-status').textContent = 'Application : Connectée';
-            document.getElementById('app-status').classList.replace('alert-secondary', 'alert-success');
-        }, 3000);
+        document.getElementById('btn2').addEventListener('click', function() {
+            sendRequest(2, "Commande vocale activée. Dites votre destination.");
+            // Simulate server interaction for voice navigation
+        });
 
-        // Simulate firmware update status
-        setTimeout(() => {
-            document.getElementById('firmware-status').textContent = 'Statut des mises à jour : À jour';
-            document.getElementById('firmware-status').classList.replace('alert-secondary', 'alert-success');
-        }, 4000);
+        document.getElementById('btn3').addEventListener('click', function() {
+            sendRequest(3, "Obtention de la direction, heure, et position.");
+            // Simulate server interaction for direction, time, and date
+        });
+
+        document.getElementById('btn4').addEventListener('click', function() {
+            sendRequest(4, "Interrupteur activé/désactivé.");
+            // Simulate server interaction for circuit switch
+        });
+
+        document.getElementById('btn5').addEventListener('click', function() {
+            sendRequest(5, "Menu activé.");
+            // Simulate server interaction for menu access
+        });
     </script>
 
     <!-- Bootstrap JS, Popper.js, and jQuery -->
