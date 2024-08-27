@@ -6,39 +6,33 @@
     <title>Boîtier Assistance Avancée</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .grid-container {
-            display: grid;
-            grid-template-areas:
-                "btn4 btn1 btn2"
-                "btn3 btn5 btn3";
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-lg {
-            width: 150px;
-            height: 60px;
-        }
-
-        #btn1 { grid-area: btn1; }
-        #btn2 { grid-area: btn2; }
-        #btn3 { grid-area: btn3; }
-        #btn4 { grid-area: btn4; }
-        #btn5 { grid-area: btn5; }
-    </style>
 </head>
 <body>
     <div class="container my-5">
         <h1 class="text-center">Boîtier Assistance Avancée</h1>
 
-        <div class="grid-container my-4">
-            <button id="btn4" class="btn btn-danger btn-lg">Interrupteur</button>
-            <button id="btn1" class="btn btn-primary btn-lg">Où suis-je ?</button>
-            <button id="btn2" class="btn btn-secondary btn-lg">Navigateur Vocal</button>
-            <button id="btn3" class="btn btn-info btn-lg">Direction & Heure</button>
-            <button id="btn5" class="btn btn-warning btn-lg">Menu</button>
+        <div class="row justify-content-center my-4">
+            <div class="col-4 text-center">
+                <button id="btn4" class="btn btn-danger btn-lg mb-2">Interrupteur</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center my-4">
+            <div class="col-4 text-center">
+                <button id="btn1" class="btn btn-primary btn-lg mb-2">Où suis-je ?</button>
+            </div>
+            <div class="col-4 text-center">
+                <button id="btn5" class="btn btn-warning btn-lg mb-2">Menu</button>
+            </div>
+            <div class="col-4 text-center">
+                <button id="btn2" class="btn btn-secondary btn-lg mb-2">Navigateur Vocal</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center my-4">
+            <div class="col-4 text-center">
+                <button id="btn3" class="btn btn-info btn-lg mb-2">Direction & Heure</button>
+            </div>
         </div>
 
         <div id="response" class="alert alert-light" role="alert" style="display: none;">
