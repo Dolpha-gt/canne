@@ -29,6 +29,11 @@
         .row-spacing {
             margin-bottom: 0; /* Remove extra margin from rows */
         }
+
+        #map {
+            height: 500px; /* Adjust the height as needed */
+            width: 100%; /* Full width */
+        }
     </style>
 </head>
 <body>
@@ -62,10 +67,30 @@
         <div id="response" class="alert alert-light" role="alert" style="display: none;">
             Réponse du serveur : <span id="server-response"></span>
         </div>
+
+        <!-- Google Maps container -->
+        <div id="map"></div>
     </div>
 
     <!-- JavaScript -->
     <script>
+        // Initialize Google Map
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            });
+
+            map.addListener('click', function(e) {
+                var latLng = e.latLng;
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+                alert('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
+            });
+        }
+
         // Simulate button actions and server responses
         function sendRequest(buttonId, message) {
             document.getElementById('response').style.display = 'block';
@@ -97,6 +122,9 @@
             // Simulate server interaction for menu access
         });
     </script>
+
+    <!-- Google Maps JavaScript API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
