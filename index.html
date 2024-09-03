@@ -82,12 +82,6 @@
 
         <!-- OpenStreetMap container -->
         <div id="map"></div>
-
-        <!-- Text to Speech Section -->
-        <div class="text-center my-4">
-            <textarea id="text-to-speak" rows="4" cols="50" placeholder="Entrez le texte ici..."></textarea><br>
-            <button id="speak-button" class="btn btn-primary btn-lg">Parler</button>
-        </div>
     </div>
 
     <!-- JavaScript -->
@@ -130,6 +124,7 @@
                     if (data && data.display_name) {
                         document.getElementById('current-location').textContent = data.display_name;
                         document.getElementById('position').style.display = 'block'; // Afficher le texte de position
+                        speakLocation(data.display_name); // Lire le nom du lieu
                     } else {
                         document.getElementById('current-location').textContent = "Lieu non trouvé";
                         document.getElementById('position').style.display = 'block'; // Afficher le texte de position
@@ -140,6 +135,19 @@
                     document.getElementById('current-location').textContent = "Erreur de géocodage";
                     document.getElementById('position').style.display = 'block'; // Afficher le texte de position
                 });
+        }
+
+        // Fonction pour convertir le texte du lieu en voix
+        function speakLocation(locationName) {
+            var speech = new SpeechSynthesisUtterance(); // Créer un nouvel objet de synthèse vocale
+            speech.text = `Votre position est : ${locationName}`; // Définir le texte à lire
+            speech.lang = 'fr-FR'; // Définir la langue (français)
+            speech.volume = 1; // Volume de 0 à 1
+            speech.rate = 1; // Vitesse de la voix
+            speech.pitch = 1; // Tonalité de la voix
+
+            // Démarrer la synthèse vocale
+            window.speechSynthesis.speak(speech);
         }
 
         // Vérifier si la géolocalisation est supportée
@@ -166,19 +174,7 @@
             }).addTo(map);
         }
 
-        // Fonction pour convertir le texte en voix
-        function speakText() {
-            var text = document.getElementById('text-to-speak').value; // Récupérer le texte du textarea
-            if (text === '') {
-                alert('Veuillez entrer du texte à lire.');
-                return;
-            }
-
-            var speech = new SpeechSynthesisUtterance(); // Créer un nouvel objet de synthèse vocale
-            speech.text = text; // Définir le texte à lire
-            speech.lang = 'fr-FR'; // Définir la langue (français)
-            speech.volume = 1; // Volume de 0 à 1
-            speech.rate = 1; // Vitesse de la voix
-            speech.pitch = 1; // Tonalité de la voix
-
-            // Démarrer la synthèse vocale
+        // Simuler les actions des boutons
+        function sendRequest(buttonId, message) {
+            document.getElementById('response').style.display = 'block';
+            document.getElementById('server
