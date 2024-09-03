@@ -122,9 +122,12 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.display_name) {
+                        var textToSpeak = data.display_name;
+                        var msg = new SpeechSynthesisUtterance();
+                        msg.text = textToSpeak;
+                        window.speechSynthesis.speak(msg);
                         document.getElementById('current-location').textContent = data.display_name;
                         document.getElementById('position').style.display = 'block'; // Afficher le texte de position
-                        speakLocation(data.display_name); // Lire le nom du lieu
                     } else {
                         document.getElementById('current-location').textContent = "Lieu non trouvé";
                         document.getElementById('position').style.display = 'block'; // Afficher le texte de position
@@ -135,19 +138,6 @@
                     document.getElementById('current-location').textContent = "Erreur de géocodage";
                     document.getElementById('position').style.display = 'block'; // Afficher le texte de position
                 });
-        }
-
-        // Fonction pour convertir le texte du lieu en voix
-        function speakLocation(locationName) {
-            var speech = new SpeechSynthesisUtterance(); // Créer un nouvel objet de synthèse vocale
-            speech.text = `Votre position est : ${locationName}`; // Définir le texte à lire
-            speech.lang = 'fr-FR'; // Définir la langue (français)
-            speech.volume = 1; // Volume de 0 à 1
-            speech.rate = 1; // Vitesse de la voix
-            speech.pitch = 1; // Tonalité de la voix
-
-            // Démarrer la synthèse vocale
-            window.speechSynthesis.speak(speech);
         }
 
         // Vérifier si la géolocalisation est supportée
@@ -177,4 +167,38 @@
         // Simuler les actions des boutons
         function sendRequest(buttonId, message) {
             document.getElementById('response').style.display = 'block';
-            document.getElementById('server
+            document.getElementById('server-response').textContent = `Le bouton ${buttonId} a été activé : ${message}`;
+        }
+
+        document.getElementById('btn1').addEventListener('click', function() {
+            sendRequest(1, "Demande de localisation en cours...");
+            // Simulate server interaction for "Où suis-je ?"
+        });
+
+        document.getElementById('btn2').addEventListener('click', function() {
+            sendRequest(2, "Commande vocale activée. Dites votre destination.");
+            // Simulate server interaction for voice navigation
+        });
+
+        document.getElementById('btn3').addEventListener('click', function() {
+            sendRequest(3, "Obtention de la direction, heure, et position.");
+            // Simulate server interaction for direction, time, and date
+        });
+
+        document.getElementById('btn4').addEventListener('click', function() {
+            sendRequest(4, "Balise activée/désactivée.");
+            // Simulate server interaction for circuit switch
+        });
+
+        document.getElementById('btn5').addEventListener('click', function() {
+            sendRequest(5, "Menu activé.");
+            // Simulate server interaction for menu access
+        });
+    </script>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
