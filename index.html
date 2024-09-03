@@ -122,10 +122,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.display_name) {
-                        var textToSpeak = data.display_name;
-                        var msg = new SpeechSynthesisUtterance();
-                        msg.text = textToSpeak;
-                        window.speechSynthesis.speak(msg);
                         document.getElementById('current-location').textContent = data.display_name;
                         document.getElementById('position').style.display = 'block'; // Afficher le texte de position
                     } else {
