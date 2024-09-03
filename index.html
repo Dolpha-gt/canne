@@ -44,14 +44,28 @@
             var destination = L.latLng(48.8737, 2.2950); // Coordonnées d'un point d'intérêt (ex : Opéra Garnier)
 
             // Créer l'itinéraire
-            L.Routing.control({
+            var routingControl = L.Routing.control({
                 waypoints: [
                     L.latLng(lat, lon), // Point de départ (emplacement actuel)
                     destination // Point d'arrivée
                 ],
                 routeWhileDragging: true,
-                geocoder: L.Control.Geocoder.nominatim()
+                geocoder: L.Control.Geocoder.nominatim(),
+                createMarker: function() { return null; } // Ne pas créer de marqueur par défaut
             }).addTo(map);
+
+            // Écouter les événements de l'itinéraire pour lire les instructions
+            routingControl.on('routesfound', function(e) {
+                var routes = e.routes;
+                var instructions = routes[0].instructions;
+
+                // Lire les instructions à voix haute
+                instructions.forEach(function(instruction) {
+                    var utterance = new SpeechSynthesisUtterance(instruction);
+                    utterance.lang = 'fr-FR'; // Langue française
+                    speechSynthesis.speak(utterance);
+                });
+            });
         }
 
         // Vérifier si la géolocalisation est supportée
