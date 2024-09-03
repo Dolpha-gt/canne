@@ -36,6 +36,11 @@
             height: 500px; /* Adjust the height as needed */
             width: 100%; /* Full width */
         }
+
+        #position {
+            margin-top: 20px; /* Space above the position text */
+            font-size: 1.2em; /* Increase font size for visibility */
+        }
     </style>
 </head>
 <body>
@@ -44,25 +49,25 @@
 
         <div class="row justify-content-center my-4 row-spacing">
             <div class="col-4 text-center">
-                <button id="btn4" class="btn btn-danger btn-lg">BaliseAutomatiq</button>
+                <button id="btn4" class="btn btn-danger btn-lg">Balise</button>
             </div>
         </div>
 
         <div class="row justify-content-center my-4 center-buttons">
             <div class="text-center">
-                <button id="btn1" class="btn btn-primary btn-lg btn-spacing">OùS-j?&Position</button>
+                <button id="btn1" class="btn btn-primary btn-lg btn-spacing">Oùs-j?</button>
             </div>
             <div class="text-center">
                 <button id="btn5" class="btn btn-warning btn-lg">Menu</button>
             </div>
             <div class="text-center">
-                <button id="btn2" class="btn btn-secondary btn-lg btn-spacing">NavigateurVocal</button>
+                <button id="btn2" class="btn btn-secondary btn-lg btn-spacing">NaVocl</button>
             </div>
         </div>
 
         <div class="row justify-content-center my-4 row-spacing">
             <div class="col-4 text-center">
-                <button id="btn3" class="btn btn-info btn-lg"> Heur & Date </button>
+                <button id="btn3" class="btn btn-info btn-lg">Drct&H</button>
             </div>
         </div>
 
@@ -72,6 +77,11 @@
 
         <!-- OpenStreetMap container -->
         <div id="map"></div>
+
+        <!-- Display current position -->
+        <div id="position" class="alert alert-info" role="alert" style="display: none;">
+            Votre position actuelle : <span id="current-position"></span>
+        </div>
     </div>
 
     <!-- JavaScript -->
@@ -99,6 +109,10 @@
             L.marker([lat, lon]).addTo(map)
                 .bindPopup('Vous êtes ici!')
                 .openPopup();
+
+            // Afficher la position actuelle en texte
+            document.getElementById('current-position').textContent = `Latitude: ${lat.toFixed(6)}, Longitude: ${lon.toFixed(6)}`;
+            document.getElementById('position').style.display = 'block'; // Afficher la div de position
         }
 
         // Vérifier si la géolocalisation est supportée
@@ -142,7 +156,7 @@
         });
 
         document.getElementById('btn3').addEventListener('click', function() {
-            sendRequest(3, "Obtention l'heure, et date.");
+            sendRequest(3, "Obtention de la direction, heure, et position.");
             // Simulate server interaction for direction, time, and date
         });
 
