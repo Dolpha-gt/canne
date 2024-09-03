@@ -82,6 +82,12 @@
 
         <!-- OpenStreetMap container -->
         <div id="map"></div>
+
+        <!-- Text to Speech Section -->
+        <div class="text-center my-4">
+            <textarea id="text-to-speak" rows="4" cols="50" placeholder="Entrez le texte ici..."></textarea><br>
+            <button id="speak-button" class="btn btn-primary btn-lg">Parler</button>
+        </div>
     </div>
 
     <!-- JavaScript -->
@@ -160,41 +166,19 @@
             }).addTo(map);
         }
 
-        // Simuler les actions des boutons
-        function sendRequest(buttonId, message) {
-            document.getElementById('response').style.display = 'block';
-            document.getElementById('server-response').textContent = `Le bouton ${buttonId} a été activé : ${message}`;
-        }
+        // Fonction pour convertir le texte en voix
+        function speakText() {
+            var text = document.getElementById('text-to-speak').value; // Récupérer le texte du textarea
+            if (text === '') {
+                alert('Veuillez entrer du texte à lire.');
+                return;
+            }
 
-        document.getElementById('btn1').addEventListener('click', function() {
-            sendRequest(1, "Demande de localisation en cours...");
-            // Simulate server interaction for "Où suis-je ?"
-        });
+            var speech = new SpeechSynthesisUtterance(); // Créer un nouvel objet de synthèse vocale
+            speech.text = text; // Définir le texte à lire
+            speech.lang = 'fr-FR'; // Définir la langue (français)
+            speech.volume = 1; // Volume de 0 à 1
+            speech.rate = 1; // Vitesse de la voix
+            speech.pitch = 1; // Tonalité de la voix
 
-        document.getElementById('btn2').addEventListener('click', function() {
-            sendRequest(2, "Commande vocale activée. Dites votre destination.");
-            // Simulate server interaction for voice navigation
-        });
-
-        document.getElementById('btn3').addEventListener('click', function() {
-            sendRequest(3, "Obtention de la direction, heure, et position.");
-            // Simulate server interaction for direction, time, and date
-        });
-
-        document.getElementById('btn4').addEventListener('click', function() {
-            sendRequest(4, "Balise activée/désactivée.");
-            // Simulate server interaction for circuit switch
-        });
-
-        document.getElementById('btn5').addEventListener('click', function() {
-            sendRequest(5, "Menu activé.");
-            // Simulate server interaction for menu access
-        });
-    </script>
-
-    <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+            // Démarrer la synthèse vocale
