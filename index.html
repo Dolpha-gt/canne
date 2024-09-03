@@ -67,14 +67,13 @@
 
         <div class="row justify-content-center my-4 row-spacing">
             <div class="col-4 text-center">
-                <p id="position-text" style="display: none;">Votre position est : <span id="current-position"></span></p>
+                <button id="btn3" class="btn btn-info btn-lg">Drct&H</button>
             </div>
         </div>
 
-        <div class="row justify-content-center my-4 row-spacing">
-            <div class="col-4 text-center">
-                <button id="btn3" class="btn btn-info btn-lg">Drct&H</button>
-            </div>
+        <!-- Display current location name -->
+        <div id="position" class="alert alert-info" role="alert" style="display: none;">
+            Votre position est : <span id="current-location"></span>
         </div>
 
         <div id="response" class="alert alert-light" role="alert" style="display: none;">
@@ -111,9 +110,30 @@
                 .bindPopup('Vous êtes ici!')
                 .openPopup();
 
-            // Afficher la position actuelle en texte
-            document.getElementById('current-position').textContent = `Latitude: ${lat.toFixed(6)}, Longitude: ${lon.toFixed(6)}`;
-            document.getElementById('position-text').style.display = 'block'; // Afficher le texte de position
+            // Afficher le nom du lieu le plus proche
+            getLocationName(lat, lon);
+        }
+
+        // Fonction pour obtenir le nom du lieu à partir des coordonnées
+        function getLocationName(lat, lon) {
+            var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.display_name) {
+                        document.getElementById('current-location').textContent = data.display_name;
+                        document.getElementById('position').style.display = 'block'; // Afficher le texte de position
+                    } else {
+                        document.getElementById('current-location').textContent = "Lieu non trouvé";
+                        document.getElementById('position').style.display = 'block'; // Afficher le texte de position
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération du nom de lieu:', error);
+                    document.getElementById('current-location').textContent = "Erreur de géocodage";
+                    document.getElementById('position').style.display = 'block'; // Afficher le texte de position
+                });
         }
 
         // Vérifier si la géolocalisation est supportée
