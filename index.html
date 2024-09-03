@@ -65,9 +65,10 @@
             </div>
         </div>
 
-        <!-- Display current position above button 3 -->
-        <div id="position" class="alert alert-info" role="alert" style="display: none;">
-            Votre position actuelle : <span id="current-position"></span>
+        <div class="row justify-content-center my-4 row-spacing">
+            <div class="col-4 text-center">
+                <p id="position-text" style="display: none;">Votre position est : <span id="current-position"></span></p>
+            </div>
         </div>
 
         <div class="row justify-content-center my-4 row-spacing">
@@ -112,7 +113,7 @@
 
             // Afficher la position actuelle en texte
             document.getElementById('current-position').textContent = `Latitude: ${lat.toFixed(6)}, Longitude: ${lon.toFixed(6)}`;
-            document.getElementById('position').style.display = 'block'; // Afficher la div de position
+            document.getElementById('position-text').style.display = 'block'; // Afficher le texte de position
         }
 
         // Vérifier si la géolocalisation est supportée
