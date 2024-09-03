@@ -44,25 +44,25 @@
 
         <div class="row justify-content-center my-4 row-spacing">
             <div class="col-4 text-center">
-                <button id="btn4" class="btn btn-danger btn-lg">Balise</button>
+                <button id="btn4" class="btn btn-danger btn-lg">BaliseAutomatiq</button>
             </div>
         </div>
 
         <div class="row justify-content-center my-4 center-buttons">
             <div class="text-center">
-                <button id="btn1" class="btn btn-primary btn-lg btn-spacing">Oùs-j?</button>
+                <button id="btn1" class="btn btn-primary btn-lg btn-spacing">OùS-j?&Position</button>
             </div>
             <div class="text-center">
                 <button id="btn5" class="btn btn-warning btn-lg">Menu</button>
             </div>
             <div class="text-center">
-                <button id="btn2" class="btn btn-secondary btn-lg btn-spacing">NaVocl</button>
+                <button id="btn2" class="btn btn-secondary btn-lg btn-spacing">NavigateurVocal</button>
             </div>
         </div>
 
         <div class="row justify-content-center my-4 row-spacing">
             <div class="col-4 text-center">
-                <button id="btn3" class="btn btn-info btn-lg">Drct&H</button>
+                <button id="btn3" class="btn btn-info btn-lg"> Heur & Date </button>
             </div>
         </div>
 
@@ -142,7 +142,7 @@
         });
 
         document.getElementById('btn3').addEventListener('click', function() {
-            sendRequest(3, "Obtention de la direction, heure, et position.");
+            sendRequest(3, "Obtention l'heure, et date.");
             // Simulate server interaction for direction, time, and date
         });
 
@@ -154,19 +154,6 @@
         document.getElementById('btn5').addEventListener('click', function() {
             sendRequest(5, "Menu activé.");
             // Simulate server interaction for menu access
-        });
-
-        // Ajouter des événements pour les boutons 6 et 7
-        document.getElementById('btn6').addEventListener('click', function() {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                routeToDestination(position.coords.latitude, position.coords.longitude);
-            });
-        });
-
-        document.getElementById('btn7').addEventListener('click', function() {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                routeToDestination(position.coords.latitude, position.coords.longitude);
-            });
         });
     </script>
 
