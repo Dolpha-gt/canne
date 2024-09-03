@@ -3,132 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistance Avancée</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Mon Emplacement sur OpenStreetMap</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <style>
-        .btn-lg {
-            width: 150px;
-            height: 60px;
-        }
-
-        .btn-spacing {
-            margin: 10px; /* 1 cm approximately */
-        }
-
-        .center-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .center-buttons > div {
-            margin: 0 10px; /* Ensure consistent spacing */
-        }
-
-        .row-spacing {
-            margin-bottom: 0; /* Remove extra margin from rows */
-        }
-
         #map {
-            height: 500px; /* Adjust the height as needed */
-            width: 100%; /* Full width */
+            height: 600px; /* Hauteur de la carte */
         }
     </style>
 </head>
 <body>
-    <div class="container my-5">
-        <h1 class="text-center">Boîtier Assistance Avancée</h1>
-
-        <div class="row justify-content-center my-4 row-spacing">
-            <div class="col-4 text-center">
-                <button id="btn4" class="btn btn-danger btn-lg">Intrpt</button>
-            </div>
-        </div>
-
-        <div class="row justify-content-center my-4 center-buttons">
-            <div class="text-center">
-                <button id="btn1" class="btn btn-primary btn-lg btn-spacing">Oùs-j?</button>
-            </div>
-            <div class="text-center">
-                <button id="btn5" class="btn btn-warning btn-lg">Menu</button>
-            </div>
-            <div class="text-center">
-                <button id="btn2" class="btn btn-secondary btn-lg btn-spacing">NaVocl</button>
-            </div>
-        </div>
-
-        <div class="row justify-content-center my-4 row-spacing">
-            <div class="col-4 text-center">
-                <button id="btn3" class="btn btn-info btn-lg">Drct&H</button>
-            </div>
-        </div>
-
-        <div id="response" class="alert alert-light" role="alert" style="display: none;">
-            Réponse du serveur : <span id="server-response"></span>
-        </div>
-
-        <!-- Google Maps container -->
-        <div id="map"></div>
-    </div>
-
-    <!-- JavaScript -->
+    <h1>Mon Emplacement sur OpenStreetMap</h1>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
     <script>
-        // Initialize Google Map
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 8
-            });
+        // Initialiser la carte
+        var map = L.map('map').setView([48.8566, 2.3522], 13); // Coordonnées par défaut (Paris)
 
-            map.addListener('click', function(e) {
-                var latLng = e.latLng;
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map
-                });
-                alert('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
-            });
+        // Ajouter une couche de tuiles OSM
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Fonction pour afficher l'emplacement actuel
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+
+            // Centrer la carte sur l'emplacement actuel
+            map.setView([lat, lon], 20);
+
+            // Ajouter un marqueur à l'emplacement actuel
+            var userMarker = L.marker([lat, lon]).addTo(map)
+                .bindPopup('Vous êtes ici!')
+                .openPopup();
+
+            // Point d'arrivée (exemple : un lieu spécifique)
+            var destination = L.latLng(48.8737, 2.2950); // Coordonnées d'un point d'intérêt (ex : Opéra Garnier)
+
+            // Créer l'itinéraire
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(lat, lon), // Point de départ (emplacement actuel)
+                    destination // Point d'arrivée
+                ],
+                routeWhileDragging: true,
+                geocoder: L.Control.Geocoder.nominatim()
+            }).addTo(map);
         }
 
-        // Simulate button actions and server responses
-        function sendRequest(buttonId, message) {
-            document.getElementById('response').style.display = 'block';
-            document.getElementById('server-response').textContent = `Le bouton ${buttonId} a été activé : ${message}`;
+        // Vérifier si la géolocalisation est supportée
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, function() {
+                alert('Erreur lors de la récupération de votre position.');
+            });
+        } else {
+            alert('La géolocalisation n\'est pas supportée par ce navigateur.');
         }
-
-        document.getElementById('btn1').addEventListener('click', function() {
-            sendRequest(1, "Demande de localisation en cours...");
-            // Simulate server interaction for "Où suis-je ?"
-        });
-
-        document.getElementById('btn2').addEventListener('click', function() {
-            sendRequest(2, "Commande vocale activée. Dites votre destination.");
-            // Simulate server interaction for voice navigation
-        });
-
-        document.getElementById('btn3').addEventListener('click', function() {
-            sendRequest(3, "Obtention de la direction, heure, et position.");
-            // Simulate server interaction for direction, time, and date
-        });
-
-        document.getElementById('btn4').addEventListener('click', function() {
-            sendRequest(4, "Interrupteur activé/désactivé.");
-            // Simulate server interaction for circuit switch
-        });
-
-        document.getElementById('btn5').addEventListener('click', function() {
-            sendRequest(5, "Menu activé.");
-            // Simulate server interaction for menu access
-        });
     </script>
-
-    <!-- Google Maps JavaScript API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-
-    <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
